@@ -22,8 +22,45 @@ Sys.setenv(OPENAI_API_KEY = Sys.getenv('OPENAI_API_KEY'))
 
 #My first chatgpt Q
 ask_chatgpt("who is barack obama")
-ask_chatgpt("2000 * 14000") #notice a mathematical string within chatGPT-the most brillian part of the anwer is 28000000
+ask_chatgpt("2000 * 14000") #notice a mathematical string within chatGPT-the most brilliant part of the answer is 28000000
+#embedded mathematical functions within LLMs-COOL!
 sum('2+2') #notice how R cannot sum a string
+
+#How can mathematics be achieved on language or strings. Example in R
+string <- '4+2'
+
+string_melt <- function(simple_string){
+  string_list <- c()
+  if(simple_string != ""){
+    for(i in 1:nchar(simple_string)){
+      string_list <- c(string_list,substring(simple_string,i,i))
+    }
+    string_list
+  }
+}
+string_melt(string)
+
+#can pretty much make a function like this for every operator and find a way to switch between functions based on operator input
+string_sum <- function(string){
+  string_list <- string_melt(string)
+  math_operator <- c('+')
+  num_extract <- c()
+  for(i in string_list){
+    if(!(i %in% math_operator)){
+      num_extract <- c(num_extract,as.numeric(i))
+    }
+  }
+  return(print(sum(num_extract)))
+}
+
+string_sum(string)
+
+#hardcode example below
+sum_string <- as.numeric(substring(string,1,1))+as.numeric(substring(string,3,3))
+print(sum_string)
+plus <- as.numeric(substring(string,2,2))
+#What is impressive about a LLM doing math? Identifying numbers within text and mathematical operators within text.
+#These models are trained to recognize * as multiply or + as addition or plus etc
 
 #interactive chat session
 chatgpt:::run_addin_ask_chatgpt()
