@@ -27,9 +27,17 @@ ask_chatgpt("2000 * 14000") #notice a mathematical string within chatGPT-the mos
 sum('2+2') #notice how R cannot sum a string
 
 #How can mathematics be achieved on language or strings. Example in R
-string <- '4+2'
+string <- '2000+5000'
+
 
 string_melt <- function(simple_string){
+  simple_string <- gsub("[+]", ",",simple_string)
+  simple_string <- strsplit(simple_string,',')
+  return(simple_string)
+}
+string_melt(string)
+
+string_melt_atomic <- function(simple_string){
   string_list <- c()
   if(simple_string != ""){
     for(i in 1:nchar(simple_string)){
@@ -38,16 +46,17 @@ string_melt <- function(simple_string){
     string_list
   }
 }
-string_melt(string)
+string_melt_atomic(string)
 
 #can pretty much make a function like this for every operator and find a way to switch between functions based on operator input
 string_sum <- function(string){
-  string_list <- string_melt(string)
+  string_atoms <- string_melt_atomic(string)
   math_operator <- c('+')
   num_extract <- c()
-  for(i in string_list){
-    if(!(i %in% math_operator)){
-      num_extract <- c(num_extract,as.numeric(i))
+  for(i in string_atoms){
+    if(i %in% math_operator){
+      for(j in string_melt(string))
+      num_extract <- c(num_extract,as.numeric(j))
     }
   }
   return(print(sum(num_extract)))
