@@ -9,12 +9,12 @@ library(chatgpt)
 
 #function to access the chatgpt platform to create a key
 chatgpt_get_key <- function(url="https://platform.openai.com/"){
-  library(devtools)
   browseURL(url)
 }
 chatgpt_get_key()
 
 #Saving the openAI key
+library(devtools)
 edit_r_environ()
 
 #set the api key
